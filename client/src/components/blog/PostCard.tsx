@@ -6,28 +6,20 @@ interface PostCardProps {
     categoryColor: string;
 }
 
-const PostCard = ({
-    title,
-    date,
-    category,
-    excerpt,
-    categoryColor,
-}: PostCardProps) => {
+const PostCard = ({ title, date, category, excerpt }: PostCardProps) => {
     return (
-        <article className="bg-white rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow">
+        <article className="bg-gray-800 rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-4">
-                <span className="text-sm text-gray-500">{date}</span>
-                <span className={`${categoryColor} text-xs px-2 py-1 rounded`}>
+                <span className="text-sm text-white">{date}</span>
+                <span className={` bg-gray-300 text-xs px-2 py-1 rounded`}>
                     {category}
                 </span>
             </div>
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">
-                {title}
-            </h2>
-            <p className="text-gray-600 mb-4">{excerpt}</p>
+            <h2 className="text-xl font-semibold text-white mb-3">{title}</h2>
+            <p className="text-gray-400 mb-4">{excerpt}</p>
             <a
                 href="#"
-                className="text-blue-600 hover:text-blue-800 font-medium"
+                className="text-blue-300 hover:text-blue-500 font-medium"
             >
                 Devamını Oku →
             </a>
