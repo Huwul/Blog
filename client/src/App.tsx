@@ -3,6 +3,7 @@ import Navbar from "./components/layout/navbar";
 import Footer from "./components/layout/footer";
 import BlogPage from "./pages/blogPage";
 import LoginPage from "./pages/loginPage";
+import AddBlogPage from "./pages/addBlogPage";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<BlogPage />} />
                     <Route path="/loginPage" element={<LoginPage />} />
+                    <Route path="/addBlogPage" element={<AddBlogPage />} />
                 </Routes>
                 <Footer />
             </div>

@@ -6,7 +6,7 @@ const BlogPage: React.FC = () => {
             id: 1,
             title: "İlk Blog Yazım",
             date: "18 Eylül 2025",
-            category: "Teknoloji",
+            category: "Yaşam",
             categoryColor: "bg-blue-100 text-blue-800",
             excerpt: "Merhaba...",
         },
@@ -14,7 +14,7 @@ const BlogPage: React.FC = () => {
             id: 2,
             title: "Web Geliştirme Deneyimlerim",
             date: "15 Eylül 2025",
-            category: "Yaşam",
+            category: "Teknoloji",
             categoryColor: "bg-green-100 text-green-800",
             excerpt:
                 "Web geliştirme dünyasında edindiğim tecrübeleri paylaşıyorum...",
