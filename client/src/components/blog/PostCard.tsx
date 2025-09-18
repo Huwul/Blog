@@ -8,10 +8,10 @@ interface PostCardProps {
 
 const PostCard = ({ title, date, category, excerpt }: PostCardProps) => {
     return (
-        <article className="bg-gray-800 rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow">
+        <article className="bg-gray-900 rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-4">
                 <span className="text-sm text-white">{date}</span>
-                <span className={` bg-gray-300 text-xs px-2 py-1 rounded`}>
+                <span className={` bg-gray-400 text-xs px-2 py-1 rounded`}>
                     {category}
                 </span>
             </div>
@@ -19,7 +19,7 @@ const PostCard = ({ title, date, category, excerpt }: PostCardProps) => {
             <p className="text-gray-400 mb-4">{excerpt}</p>
             <a
                 href="#"
-                className="text-blue-300 hover:text-blue-500 font-medium"
+                className="text-blue-400 hover:text-blue-600 font-medium"
             >
                 Devamını Oku →
             </a>
