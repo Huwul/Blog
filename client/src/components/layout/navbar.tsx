@@ -14,13 +14,13 @@ const Navbar = () => {
                     <div className="flex items-center space-x-6">
                         <Link
                             to="/addBlogPage"
-                            className="text-white hover:text-gray-400 transition-colors"
+                            className="text-white hover:text-gray-500 transition-colors"
                         >
                             Add Blog
                         </Link>
                         <Link
                             to="/loginPage"
-                            className="text-white hover:text-gray-400 transition-colors"
+                            className="text-white hover:text-gray-500 transition-colors"
                         >
                             Login
                         </Link>

@@ -27,7 +27,7 @@ const LoginPage: React.FC = () => {
             <div className="max-w-md w-full">
                 {/* Logo/Title */}
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-white mb-2">Blog</h1>
+                    <h1 className="text-3xl font-bold text-white mb-2">My Blog</h1>
                     <p className="text-gray-400">
                         {isLogin
                             ? "Hesabınıza giriş yapın"

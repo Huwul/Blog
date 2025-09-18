@@ -49,14 +49,6 @@ const AddBlogPage: React.FC = () => {
     return (
         <div className="min-h-screen bg-black py-8">
             <div className="max-w-4xl mx-auto px-4">
-                {/* Header */}
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-white mb-2">
-                        Yeni Blog Yazısı
-                    </h1>
-                    <p className="text-gray-400">Düşüncelerinizi paylaşın</p>
-                </div>
-
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Title */}
                     <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
