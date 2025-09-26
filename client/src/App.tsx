@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/layout/navbar";
-import Footer from "./components/layout/footer";
-import BlogPage from "./pages/blogPage";
-import LoginPage from "./pages/loginPage";
-import AddBlogPage from "./pages/addBlogPage";
+import Navbar from "./components/common/Navbar";
+import Footer from "./components/common/Footer";
+import BlogPage from "./pages/BlogPage";
+import LoginPage from "./pages/LoginPage";
+import AddBlogPage from "./pages/AddBlogPage";
 
 function App() {
     return (

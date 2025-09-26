@@ -19,5 +19,9 @@
   "description": "",
   "devDependencies": {
     "concurrently": "^9.2.1"
-  }
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ]
 }

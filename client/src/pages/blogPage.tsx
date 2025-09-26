@@ -1,4 +1,4 @@
-import PostCard from "../components/blog/PostCard";
+import PostCard from "../components/cards/PostCard";
 
 const BlogPage: React.FC = () => {
     const posts = [
@@ -7,7 +7,6 @@ const BlogPage: React.FC = () => {
             title: "İlk Blog Yazım",
             date: "18 Eylül 2025",
             category: "Yaşam",
-            categoryColor: "bg-blue-100 text-blue-800",
             excerpt: "Merhaba...",
         },
         {
@@ -15,7 +14,6 @@ const BlogPage: React.FC = () => {
             title: "Web Geliştirme Deneyimlerim",
             date: "15 Eylül 2025",
             category: "Teknoloji",
-            categoryColor: "bg-green-100 text-green-800",
             excerpt:
                 "Web geliştirme dünyasında edindiğim tecrübeleri paylaşıyorum...",
         },
@@ -31,7 +29,6 @@ const BlogPage: React.FC = () => {
                         title={post.title}
                         date={post.date}
                         category={post.category}
-                        categoryColor={post.categoryColor}
                         excerpt={post.excerpt}
                     />
                 ))}
