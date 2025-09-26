@@ -1,4 +1,9 @@
 import { useState } from "react";
+import {
+    LoginSchema,
+    RegisterSchema,
+} from "../../../schemas/Login_RegisterSchema";
+import { z } from "zod";
 
 const LoginPage: React.FC = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -8,18 +13,56 @@ const LoginPage: React.FC = () => {
         confirmPassword: "",
         name: "",
     });
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
+
+        // Clear error when user starts typing
+        if (errors[e.target.name]) {
+            setErrors((prev) => ({
+                ...prev,
+                [e.target.name]: "",
+            }));
+        }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission
-        console.log("Form submitted:", formData);
+        setErrors({});
+
+        try {
+            if (isLogin) {
+                const validatedData = LoginSchema.parse({
+                    email: formData.email,
+                    password: formData.password,
+                });
+                console.log("Login data:", validatedData);
+                // Handle login
+            } else {
+                const validatedData = RegisterSchema.parse({
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                    confirmPassword: formData.confirmPassword,
+                });
+                console.log("Register data:", validatedData);
+                // Handle registration
+            }
+        } catch (error) {
+            if (error instanceof z.ZodError) {
+                const fieldErrors: Record<string, string> = {};
+                error.issues.forEach((err: z.ZodIssue) => {
+                    if (err.path && err.path.length > 0) {
+                        fieldErrors[err.path[0] as string] = err.message;
+                    }
+                });
+                setErrors(fieldErrors);
+            }
+        }
     };
 
     return (
@@ -27,7 +70,9 @@ const LoginPage: React.FC = () => {
             <div className="max-w-md w-full">
                 {/* Logo/Title */}
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-white mb-2">My Blog</h1>
+                    <h1 className="text-3xl font-bold text-white mb-2">
+                        My Blog
+                    </h1>
                     <p className="text-gray-400">
                         {isLogin
                             ? "Hesabınıza giriş yapın"
@@ -74,10 +119,18 @@ const LoginPage: React.FC = () => {
                                     name="name"
                                     value={formData.name}
                                     onChange={handleInputChange}
-                                    className="w-full px-3 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all"
+                                    className={`w-full px-3 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all ${
+                                        errors.name
+                                            ? "border-red-500"
+                                            : "border-gray-700"
+                                    }`}
                                     placeholder="Ad Soyad giriniz"
-                                    required={!isLogin}
                                 />
+                                {errors.name && (
+                                    <p className="text-red-400 text-sm mt-1">
+                                        {errors.name}
+                                    </p>
+                                )}
                             </div>
                         )}
 
@@ -91,10 +144,18 @@ const LoginPage: React.FC = () => {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
-                                className="w-full px-3 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all"
+                                className={`w-full px-3 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all ${
+                                    errors.email
+                                        ? "border-red-500"
+                                        : "border-gray-700"
+                                }`}
                                 placeholder="E-posta adresinizi giriniz"
-                                required
                             />
+                            {errors.email && (
+                                <p className="text-red-400 text-sm mt-1">
+                                    {errors.email}
+                                </p>
+                            )}
                         </div>
 
                         {/* Password */}
@@ -107,10 +168,18 @@ const LoginPage: React.FC = () => {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleInputChange}
-                                className="w-full px-3 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all"
+                                className={`w-full px-3 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all ${
+                                    errors.password
+                                        ? "border-red-500"
+                                        : "border-gray-700"
+                                }`}
                                 placeholder="Şifrenizi giriniz"
-                                required
                             />
+                            {errors.password && (
+                                <p className="text-red-400 text-sm mt-1">
+                                    {errors.password}
+                                </p>
+                            )}
                         </div>
 
                         {/* Confirm Password for signup */}
@@ -124,10 +193,18 @@ const LoginPage: React.FC = () => {
                                     name="confirmPassword"
                                     value={formData.confirmPassword}
                                     onChange={handleInputChange}
-                                    className="w-full px-3 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all"
+                                    className={`w-full px-3 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all ${
+                                        errors.confirmPassword
+                                            ? "border-red-500"
+                                            : "border-gray-700"
+                                    }`}
                                     placeholder="Şifrenizi tekrar giriniz"
-                                    required={!isLogin}
                                 />
+                                {errors.confirmPassword && (
+                                    <p className="text-red-400 text-sm mt-1">
+                                        {errors.confirmPassword}
+                                    </p>
+                                )}
                             </div>
                         )}
 

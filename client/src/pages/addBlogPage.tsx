@@ -1,6 +1,8 @@
 import { useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import "@uiw/react-md-editor/markdown-editor.css";
+import { CreatePostSchema } from "../../../schemas/BlogSchema";
+import { z } from "zod";
 
 const AddBlogPage: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const AddBlogPage: React.FC = () => {
         content: "",
         tags: "",
     });
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     const handleInputChange = (
         e: React.ChangeEvent<
@@ -20,6 +23,14 @@ const AddBlogPage: React.FC = () => {
             ...formData,
             [e.target.name]: e.target.value,
         });
+
+        // Clear error when user starts typing
+        if (errors[e.target.name]) {
+            setErrors((prev) => ({
+                ...prev,
+                [e.target.name]: "",
+            }));
+        }
     };
 
     const handleContentChange = (value?: string) => {
@@ -27,12 +38,34 @@ const AddBlogPage: React.FC = () => {
             ...formData,
             content: value || "",
         });
+
+        if (errors.content) {
+            setErrors((prev) => ({
+                ...prev,
+                content: "",
+            }));
+        }
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Blog saved:", formData);
-        // API call will be here
+        setErrors({});
+
+        try {
+            const validatedData = CreatePostSchema.parse(formData);
+            console.log("Valid blog data:", validatedData);
+            // API call will be here
+        } catch (error) {
+            if (error instanceof z.ZodError) {
+                const fieldErrors: Record<string, string> = {};
+                error.issues.forEach((err: z.ZodIssue) => {
+                    if (err.path && err.path.length > 0) {
+                        fieldErrors[err.path[0] as string] = err.message;
+                    }
+                });
+                setErrors(fieldErrors);
+            }
+        }
     };
 
     const categories = [
@@ -60,13 +93,21 @@ const AddBlogPage: React.FC = () => {
                             name="title"
                             value={formData.title}
                             onChange={handleInputChange}
-                            className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all"
+                            className={`w-full px-4 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all ${
+                                errors.title
+                                    ? "border-red-500"
+                                    : "border-gray-700"
+                            }`}
                             placeholder="Blog yazınızın başlığını giriniz..."
-                            required
                         />
+                        {errors.title && (
+                            <p className="text-red-400 text-sm mt-1">
+                                {errors.title}
+                            </p>
+                        )}
                     </div>
 
-                    {/* Category and Tags */}
+                    {/* Category */}
                     <div className="grid gap-6">
                         <div className="bg-gray-900 rounded-lg p-6 border border-gray-800">
                             <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -76,8 +117,11 @@ const AddBlogPage: React.FC = () => {
                                 name="category"
                                 value={formData.category}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all"
-                                required
+                                className={`w-full px-4 py-3 bg-gray-800 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all ${
+                                    errors.category
+                                        ? "border-red-500"
+                                        : "border-gray-700"
+                                }`}
                             >
                                 <option value="">Kategori seçiniz</option>
                                 {categories.map((cat) => (
@@ -86,6 +130,11 @@ const AddBlogPage: React.FC = () => {
                                     </option>
                                 ))}
                             </select>
+                            {errors.category && (
+                                <p className="text-red-400 text-sm mt-1">
+                                    {errors.category}
+                                </p>
+                            )}
                         </div>
                     </div>
 
@@ -99,10 +148,18 @@ const AddBlogPage: React.FC = () => {
                             value={formData.excerpt}
                             onChange={handleInputChange}
                             rows={3}
-                            className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all resize-none"
+                            className={`w-full px-4 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all resize-none ${
+                                errors.excerpt
+                                    ? "border-red-500"
+                                    : "border-gray-700"
+                            }`}
                             placeholder="Blog yazınızın kısa bir özetini yazın..."
-                            required
                         />
+                        {errors.excerpt && (
+                            <p className="text-red-400 text-sm mt-1">
+                                {errors.excerpt}
+                            </p>
+                        )}
                     </div>
 
                     {/* Markdown Editor */}
@@ -123,6 +180,11 @@ const AddBlogPage: React.FC = () => {
                                 }}
                             />
                         </div>
+                        {errors.content && (
+                            <p className="text-red-400 text-sm mt-1">
+                                {errors.content}
+                            </p>
+                        )}
                     </div>
 
                     {/* Action Buttons */}

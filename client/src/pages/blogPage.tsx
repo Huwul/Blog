@@ -1,7 +1,8 @@
 import PostCard from "../components/cards/PostCard";
+import { PostSchema, type Post } from "../../../schemas/BlogSchema";
 
 const BlogPage: React.FC = () => {
-    const posts = [
+    const postsData = [
         {
             id: 1,
             title: "İlk Blog Yazım",
@@ -18,6 +19,9 @@ const BlogPage: React.FC = () => {
                 "Web geliştirme dünyasında edindiğim tecrübeleri paylaşıyorum...",
         },
     ];
+
+    
+    const posts: Post[] = postsData.map((post) => PostSchema.parse(post));
 
     return (
         <main className="max-w-4xl mx-auto px-4 py-8">
