@@ -1,5 +1,5 @@
 import PostCard from "../components/cards/PostCard";
-import { PostSchema, type Post } from "../../../schemas/BlogSchema";
+import { PostSchema, type Post } from "../../../../schemas/BlogSchema";
 
 const BlogPage: React.FC = () => {
     const postsData = [

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import "@uiw/react-md-editor/markdown-editor.css";
-import { CreatePostSchema } from "../../../schemas/BlogSchema";
+import { CreatePostSchema } from "../../../../schemas/BlogSchema";
 import { z } from "zod";
 
 const AddBlogPage: React.FC = () => {

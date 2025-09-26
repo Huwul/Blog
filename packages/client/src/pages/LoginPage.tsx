@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
     LoginSchema,
     RegisterSchema,
-} from "../../../schemas/Login_RegisterSchema";
+} from "../../../../schemas/Login_RegisterSchema";
 import { z } from "zod";
 
 const LoginPage: React.FC = () => {
